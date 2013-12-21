@@ -1,0 +1,94 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".BankActivity" >
+
+<TextView
+    android:id="@+id/bank"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="35dp"
+    android:gravity="center"
+    android:text="@string/bank"
+    android:textSize="35sp" />
+
+<TextView
+    android:id="@+id/balance"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/bank"
+    android:layout_marginTop="32dp"
+    android:layout_toRightOf="@+id/bank"
+    android:gravity="center"
+    android:textSize="25sp" />
+
+<TextView
+    android:id="@+id/bal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignBaseline="@+id/balance"
+    android:layout_alignBottom="@+id/balance"
+    android:layout_toLeftOf="@+id/bank"
+    android:gravity="center"
+    android:text="@string/balance"
+    android:textSize="25sp" />
+
+<TextView
+    android:id="@+id/amount"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignLeft="@+id/bal"
+    android:layout_below="@+id/bal"
+    android:layout_marginTop="14dp"
+    android:gravity="center"
+    android:text="@string/amount"
+    android:textSize="25sp" />
+
+<EditText
+    android:id="@+id/editText1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignBaseline="@+id/amount"
+    android:layout_alignBottom="@+id/amount"
+    android:layout_alignLeft="@+id/bank"
+    android:layout_marginLeft="38dp"
+    android:ems="10"
+    android:inputType="numberDecimal" >
+
+</EditText>
+
+<Button
+    android:id="@+id/back"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true"
+    android:text="@string/back"
+    android:textSize="20sp" />
+
+<Button
+    android:id="@+id/deposit"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_above="@+id/back"
+    android:layout_centerHorizontal="true"
+    android:text="@string/deposit"
+    android:textSize="20sp" />
+
+<Button
+    android:id="@+id/withdraw"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_above="@+id/deposit"
+    android:layout_centerHorizontal="true"
+    android:text="@string/withdraw"
+    android:textSize="20sp" />
+
+</RelativeLayout>

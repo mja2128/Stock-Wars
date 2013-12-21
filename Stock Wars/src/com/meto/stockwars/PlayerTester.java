@@ -1,3 +1,5 @@
+package com.meto.stockwars;
+
 /**
  * A class to test the functionality of the Player class.
  */

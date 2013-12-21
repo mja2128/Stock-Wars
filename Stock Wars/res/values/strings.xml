@@ -4,5 +4,31 @@
     <string name="app_name">Stock Wars</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_game_day">GameDayActivity</string>
+    <string name="gamedayhelp">Game Day Help</string>
+    <string name="cash">Cash</string>
+    <string name="bank">Bank</string>
+    <string name="day">Day</string>
+    <string name="trading_boosts">Trading Boosts</string>
+    <string name="advance">Advance</string>
+    <string name="question_mark">\?</string>
+    <string name="ok">OK</string>
+    <string name="help_detail">This is the main game screen which represents one day of stock trading. Use this screen to buy and sell stocks, withdraw or deposit money to/from the bank, and pay off debt.</string>
+    <string name="back">Back</string>
+    <string name="deposit">Deposit</string>
+    <string name="withdraw">Withdraw</string>
+    <string name="amount">Amount</string>
+    <string name="balance">Balance</string>
+    <string name="new_game">New Game</string>
+    <string name="resume_game">Resume Game</string>
+    <string name="help">Help</string>
+    <string name="stock_wars">Stock Wars</string>
+    <string name="cancel">Cancel</string>
+    <string name="choose_game_length">Choose game length</string>
+    <string name="title_activity_main_menu_help">Stock Wars Intro</string>
+    <string name="main_menu_help">Welcome to Stock Wars! This game is based on stock market trading. In order to play, you must buy stocks at the lowest possible prices and sell them at the highest possible prices. Pressing the \"Advance\" button advances the game by one day and changes the prices of the stocks. Keep doing this until the game ends and see how much you have earned!</string>
+    <string name="main_menu_help_title">Stock Wars Help</string>
+    <string name="results">Results</string>
+    <string name="title_activity_game_day_help">Stock Wars Help</string>
 
 </resources>

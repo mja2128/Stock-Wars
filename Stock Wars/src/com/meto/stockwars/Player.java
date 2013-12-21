@@ -1,3 +1,7 @@
+package com.meto.stockwars;
+
+import java.util.HashMap;
+
 /**
  * A class to represent the player in the Stock Wars game.
  */
@@ -11,9 +15,12 @@ public class Player
 	private double cash;
 	private double bankBalance;
 	private double debt;
-	private int[] sharesOwned;
+	//private int[] sharesOwned;
+	private HashMap<String, Integer> sharesOwned; 
 	private int stocksBought;
 	private int stocksSold;
+	private boolean insiderInfo;
+	private boolean stockBroker;
 	
 	public Player()
 	{
@@ -21,9 +28,12 @@ public class Player
 		cash = 2000.00;
 		bankBalance = 0.00;
 		debt = 5000.00;
-		sharesOwned = new int[15];
+		//sharesOwned = new int[15];
+		sharesOwned = new HashMap<String, Integer>(15);
 		stocksBought = 0;
 		stocksSold = 0;
+		insiderInfo = false;
+		stockBroker = false;
 	}
 	
 	public static enum Field
@@ -61,7 +71,15 @@ public class Player
 		return value;
 	}
 	
-	public int getSharesOwned(Stock stock)
+	public int getSharesOwned(String stockName)
+	{
+		if(sharesOwned.containsKey(stockName))
+			return sharesOwned.get(stockName);
+		else
+			return 0;
+	}
+	
+	/*public int getSharesOwned(Stock stock)
 	{
 		int value = 0;
 		switch(stock)
@@ -113,7 +131,7 @@ public class Player
 				break;
 		}
 		return value;
-	}
+	}*/
 	
 	public boolean setValue(Field field, double value)
 	{
@@ -202,7 +220,12 @@ public class Player
 		return result;
 	}
 	
-	public boolean setSharesOwned(Stock stock, int amount)
+	public void setSharesOwned(String stockName, int amount)
+	{
+		sharesOwned.put(stockName, amount);	
+	}
+	
+	/*public boolean setSharesOwned(Stock stock, int amount)
 	{
 		boolean result = false;
 		switch(stock)
@@ -269,9 +292,9 @@ public class Player
 				break;
 		}
 		return result;
-	}
+	}*/
 	
-	public boolean addToSharesOwned(Stock stock, int addAmount)
+	/*public boolean addToSharesOwned(Stock stock, int addAmount)
 	{
 		boolean result = false;
 		switch(stock)
@@ -338,9 +361,9 @@ public class Player
 				break;
 		}
 		return result;
-	}
+	}*/
 	
-	public boolean subtractFromSharesOwned(Stock stock, int subAmount)
+	/*public boolean subtractFromSharesOwned(Stock stock, int subAmount)
 	{
 		boolean result = false;
 		switch(stock)
@@ -407,5 +430,25 @@ public class Player
 				break;
 		}
 		return result;
+	}*/
+	
+	public boolean isInsiderInfoEnabled()
+	{
+		return insiderInfo;
+	}
+	
+	public void setInsiderInfo(boolean b)
+	{
+		insiderInfo = b;
+	}
+	
+	public boolean isStockBrokerEnabled()
+	{
+		return stockBroker;
+	}
+	
+	public void setStockBroker(boolean b)
+	{
+		stockBroker = b;
 	}
 }

@@ -22,6 +22,34 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.meto.stockwars.GameDayActivity"
+            android:label="@string/title_activity_game_day" >
+        </activity>
+        <activity
+            android:name="com.meto.stockwars.MainMenuHelpActivity"
+            android:label="@string/title_activity_main_menu_help"
+            android:parentActivityName="com.meto.stockwars.MainMenuActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.meto.stockwars.MainMenuActivity" />
+        </activity>
+        <activity
+            android:name="com.meto.stockwars.GameDayHelpActivity"
+            android:label="@string/title_activity_game_day_help"
+            android:parentActivityName="com.meto.stockwars.GameDayActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.meto.stockwars.GameDayActivity" />
+        </activity>
+        <activity
+            android:name="com.meto.stockwars.BankActivity"
+            android:label="@string/bank"
+            android:parentActivityName="com.meto.stockwars.GameDayActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.meto.stockwars.GameDayActivity" />
+        </activity>
     </application>
 
 </manifest>

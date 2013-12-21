@@ -1,10 +1,12 @@
+package com.meto.stockwars;
+
 
 public class Main {
 
 	public static void main(String[] args) {
 		{
 			String Tomika = "Tomika Industries";
-			Stocks stock1 = new Stocks(Tomika,100.00);
+			Stock stock1 = new Stock(Tomika,100.00);
 			stock1.stockHistory(1);
 			System.out.println("Here is the intial price for" + stock1.getName());
 			System.out.println(stock1.getPrice());

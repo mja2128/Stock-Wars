@@ -8,9 +8,41 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainMenuActivity" >
 
-    <TextView
+    <Button
+        android:id="@+id/helpButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/help"
+        android:onClick="onHelp" />
+
+    <Button
+        android:id="@+id/newGameButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/resumeGameButton"
+        android:layout_centerHorizontal="true"
+        android:onClick="onNewGame"
+        android:text="@string/new_game" />
+
+    <Button
+        android:id="@+id/resumeGameButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/helpButton"
+        android:layout_centerHorizontal="true"
+        android:text="@string/resume_game" />
+
+    <TextView
+        android:id="@+id/cashTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="56dp"
+        android:text="@string/stock_wars"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="36sp" />
 
 </RelativeLayout>
