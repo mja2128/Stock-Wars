@@ -43,15 +43,15 @@ public class PlayerTester
 	{
 		// setting fields to arbitrary values to make sure this function works
 		boolean pass = true;
-		if(!player.setValue(Player.Field.CASH, 55.80))
+		if(!player.setValue(Player.Field.CASH, 55.80f))
 			pass = false;
 		if(player.getField(Player.Field.CASH) != 55.80)
 			pass = false;
-		if(!player.setValue(Player.Field.DEBT, 7856.60))
+		if(!player.setValue(Player.Field.DEBT, 7856.60f))
 			pass = false;
 		if(player.getField(Player.Field.DEBT) != 7856.60)
 			pass = false;
-		if(!player.setValue(Player.Field.BANKBALANCE, 2380.80))
+		if(!player.setValue(Player.Field.BANKBALANCE, 2380.80f))
 			pass = false;
 		if(player.getField(Player.Field.BANKBALANCE) != 2380.80)
 			pass = false;

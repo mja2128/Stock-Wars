@@ -1,5 +1,6 @@
 package com.meto.stockwars;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 
 /**
@@ -12,9 +13,9 @@ import java.util.HashMap;
  */
 public class Player
 {
-	private double cash;
-	private double bankBalance;
-	private double debt;
+	private float cash;
+	private float bankBalance;
+	private float debt;
 	//private int[] sharesOwned;
 	private HashMap<String, Integer> sharesOwned; 
 	private int stocksBought;
@@ -25,9 +26,9 @@ public class Player
 	public Player()
 	{
 		// these are the initial values for these fields
-		cash = 2000.00;
-		bankBalance = 0.00;
-		debt = 5000.00;
+		cash = 2000.00f;
+		bankBalance = 0.00f;
+		debt = 5000.00f;
 		//sharesOwned = new int[15];
 		sharesOwned = new HashMap<String, Integer>(15);
 		stocksBought = 0;
@@ -41,25 +42,25 @@ public class Player
 		CASH, BANKBALANCE, DEBT, STOCKSBOUGHT, STOCKSSOLD
 	}
 	
-	public enum Stock
+	/*public enum Stock
 	{
 		STOCK1, STOCK2, STOCK3, STOCK4, STOCK5, STOCK6, STOCK7, STOCK8,
 		STOCK9, STOCK10, STOCK11, STOCK12, STOCK13, STOCK14, STOCK15
-	}
+	}*/
 	
-	public double getField(Field field)
+	public float getField(Field field)
 	{
-		double value = 0;
+		float value = 0.00f;
 		switch(field)
 		{
 			case CASH:
-				value = this.cash;
+				value = round(this.cash, 2, BigDecimal.ROUND_HALF_UP);
 				break;
 			case BANKBALANCE:
-				value = this.bankBalance;
+				value = round(this.bankBalance, 2, BigDecimal.ROUND_HALF_UP);
 				break;
 			case DEBT:
-				value = this.debt;
+				value = round(this.debt, 2, BigDecimal.ROUND_HALF_UP);
 				break;
 			case STOCKSBOUGHT:
 				value = this.stocksBought;
@@ -133,21 +134,21 @@ public class Player
 		return value;
 	}*/
 	
-	public boolean setValue(Field field, double value)
+	public boolean setValue(Field field, float value)
 	{
 		boolean result = false;
 		switch(field)
 		{
 			case CASH:
-				this.cash = value;
+				this.cash = round(value, 2, BigDecimal.ROUND_HALF_UP);
 				result = true;
 				break;
 			case BANKBALANCE:
-				this.bankBalance = value;
+				this.bankBalance = round(value, 2, BigDecimal.ROUND_HALF_UP);
 				result = true;
 				break;
 			case DEBT:
-				this.debt = value;
+				this.debt = round(value, 2, BigDecimal.ROUND_HALF_UP);
 				result = true;
 				break;
 			case STOCKSBOUGHT:
@@ -162,58 +163,58 @@ public class Player
 		return result;
 	}
 	
-	public boolean addToField(Field field, double addAmount)
+	public boolean addToField(Field field, float addAmount)
 	{
 		boolean result = false;
 		switch(field)
 		{
 			case CASH:
-				this.cash += addAmount;
+				this.cash += round(addAmount, 2, BigDecimal.ROUND_HALF_UP);
 				result = true;
 				break;
 			case DEBT:
-				this.debt += addAmount;
+				this.debt += round(addAmount, 2, BigDecimal.ROUND_HALF_UP);
 				result = true;
 				break;
 			case BANKBALANCE:
-				this.bankBalance += addAmount;
+				this.bankBalance += round(addAmount, 2, BigDecimal.ROUND_HALF_UP);
 				result = true;
 				break;
 			case STOCKSBOUGHT:
-				this.stocksBought += addAmount;
+				this.stocksBought += round(addAmount, 2, BigDecimal.ROUND_HALF_UP);
 				result = true;
 				break;
 			case STOCKSSOLD:
-				this.stocksSold += addAmount;
+				this.stocksSold += round(addAmount, 2, BigDecimal.ROUND_HALF_UP);
 				result = true;
 				break;
 		}
 		return result;
 	}
 	
-	public boolean subtractFromField(Field field, double subAmount)
+	public boolean subtractFromField(Field field, float subAmount)
 	{
 		boolean result = false;
 		switch(field)
 		{
 			case CASH:
-				this.cash -= subAmount;
+				this.cash -= round(subAmount, 2, BigDecimal.ROUND_HALF_UP);
 				result = true;
 				break;
 			case DEBT:
-				this.debt -= subAmount;
+				this.debt -= round(subAmount, 2, BigDecimal.ROUND_HALF_UP);
 				result = true;
 				break;
 			case BANKBALANCE:
-				this.bankBalance -= subAmount;
+				this.bankBalance -= round(subAmount, 2, BigDecimal.ROUND_HALF_UP);
 				result = true;
 				break;
 			case STOCKSBOUGHT:
-				this.stocksBought -= subAmount;
+				this.stocksBought -= round(subAmount, 2, BigDecimal.ROUND_HALF_UP);
 				result = true;
 				break;
 			case STOCKSSOLD:
-				this.stocksSold -= subAmount;
+				this.stocksSold -= round(subAmount, 2, BigDecimal.ROUND_HALF_UP);
 				result = true;
 				break;
 		}
@@ -450,5 +451,12 @@ public class Player
 	public void setStockBroker(boolean b)
 	{
 		stockBroker = b;
+	}
+	
+	private float round(float unrounded, int precision, int roundingMode)
+	{
+	    BigDecimal bd = new BigDecimal(unrounded);
+	    BigDecimal rounded = bd.setScale(precision, roundingMode);
+	    return rounded.floatValue();
 	}
 }

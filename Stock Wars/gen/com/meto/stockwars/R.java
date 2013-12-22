@@ -28,10 +28,10 @@ public final class R {
         public static final int ic_title_pic=0x7f020001;
     }
     public static final class id {
-        public static final int action_settings=0x7f090016;
+        public static final int action_settings=0x7f090017;
         public static final int advanceButon=0x7f09000d;
-        public static final int amount=0x7f090006;
-        public static final int back=0x7f090003;
+        public static final int amount=0x7f090003;
+        public static final int back=0x7f090005;
         public static final int bal=0x7f090002;
         public static final int balance=0x7f090001;
         public static final int bank=0x7f090000;
@@ -39,18 +39,19 @@ public final class R {
         public static final int bankTextView=0x7f09000a;
         public static final int cashTextView=0x7f090009;
         public static final int dayTextView=0x7f090008;
-        public static final int deposit=0x7f090005;
-        public static final int editText1=0x7f090007;
+        public static final int debtTextView=0x7f090010;
+        public static final int deposit=0x7f090006;
+        public static final int editText1=0x7f090004;
         public static final int gameDayHelpButton=0x7f09000f;
-        public static final int help=0x7f090012;
-        public static final int helpButton=0x7f090013;
-        public static final int helptitle=0x7f090010;
-        public static final int newGameButton=0x7f090014;
-        public static final int ok=0x7f090011;
-        public static final int resumeGameButton=0x7f090015;
+        public static final int help=0x7f090013;
+        public static final int helpButton=0x7f090014;
+        public static final int helptitle=0x7f090011;
+        public static final int newGameButton=0x7f090015;
+        public static final int ok=0x7f090012;
+        public static final int resumeGameButton=0x7f090016;
         public static final int stocksListView=0x7f09000e;
         public static final int tradingBoostsButton=0x7f09000c;
-        public static final int withdraw=0x7f090004;
+        public static final int withdraw=0x7f090007;
     }
     public static final class layout {
         public static final int activity_bank=0x7f030000;
@@ -77,6 +78,7 @@ public final class R {
         public static final int cash=0x7f060005;
         public static final int choose_game_length=0x7f060017;
         public static final int day=0x7f060007;
+        public static final int debt=0x7f06001d;
         public static final int deposit=0x7f06000e;
         public static final int gamedayhelp=0x7f060004;
         public static final int hello_world=0x7f060002;

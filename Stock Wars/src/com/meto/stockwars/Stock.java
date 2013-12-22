@@ -1,49 +1,51 @@
 package com.meto.stockwars;
+
+import java.math.BigDecimal;
 import java.util.Random;
 
 public class Stock
 {
-	private double price;
+	private float price;
 	private String name;
-	private double[] priceHistory = new double[121]; 
+	private float[] priceHistory = new float[121]; 
 	
-	public Stock(String name, double setprice)
+	public Stock(String name, float setprice)
 	{
 		this.name = name;
-		price = setprice;
+		price = round(setprice, 2, BigDecimal.ROUND_HALF_UP);
 	}
 	
 	public void randomPriceChange()
 	{
 		Random rand = new Random(); 
 		int value = rand.nextInt(4);
-		double percent = rand.nextInt(25)+1;
+		float percent = rand.nextInt(25)+1;
 		
 		if(value>1)
-			price = price+((percent/100)*price);
+			price = round(price + ((percent/100)*price), 2, BigDecimal.ROUND_HALF_UP);
 		else if(value<=1)
 		{
-			price = price-((percent/100)*price) ;
+			price = round(price-((percent/100)*price), 2, BigDecimal.ROUND_HALF_UP) ;
 			if(price <= 0)
-				price = (-1* price) + 10;
+				price = round((-1* price) + 10, 2, BigDecimal.ROUND_HALF_UP);
 		}
 				
 	}
 	
-	public void stockHistory(int day)
+	public void addToPriceHistory(int day)
 	{
 	
-		priceHistory[day] = price;
+		priceHistory[day] = round(price, 2, BigDecimal.ROUND_HALF_UP);
 	}
 	
-	public double getPrice()
+	public float getPrice()
 	{
-		return price;
+		return round(price, 2, BigDecimal.ROUND_HALF_UP);
 	}
 	
-	public void setPrice(double price)
+	public void setPrice(float price)
 	{
-		this.price = price;
+		this.price = round(price, 2, BigDecimal.ROUND_HALF_UP);
 	}
 	
 	public String getName()
@@ -54,5 +56,11 @@ public class Stock
 	public void setName(String name)
 	{
 		this.name = name;
+	}
+	private float round(float unrounded, int precision, int roundingMode)
+	{
+	    BigDecimal bd = new BigDecimal(unrounded);
+	    BigDecimal rounded = bd.setScale(precision, roundingMode);
+	    return rounded.floatValue();
 	}
 }

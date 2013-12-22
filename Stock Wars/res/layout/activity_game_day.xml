@@ -58,7 +58,8 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/tradingBoostsButton"
         android:layout_centerHorizontal="true"
-        android:text="@string/advance" />
+        android:text="@string/advance"
+        android:onClick="onAdvanceButton" />
 
     <ListView
         android:id="@+id/stocksListView"
@@ -79,5 +80,14 @@
         android:layout_alignParentRight="true"
         android:text="@string/question_mark"
         android:onClick="onGameDayHelpButton" />
+
+    <TextView
+        android:id="@+id/debtTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/dayTextView"
+        android:text="@string/debt"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>
