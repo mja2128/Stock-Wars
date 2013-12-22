@@ -21,7 +21,7 @@ public class BankActivity extends Activity {
 		withdraw= (Button) findViewById(R.id.withdraw);
 		deposit= (Button) findViewById(R.id.deposit);
 		back= (Button) findViewById(R.id.back);
-		editText1 =(EditText) findViewById(R.id.editText1);
+		editText1 =(EditText) findViewById(R.id.amountTextField);
 		balance= (TextView) findViewById(R.id.balance);
 		//amnt=editText1.toString();
 		deposit.setOnClickListener(new View.OnClickListener() {

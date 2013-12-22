@@ -24,31 +24,48 @@ public final class R {
         public static final int activity_vertical_margin=0x7f040001;
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
-        public static final int ic_title_pic=0x7f020001;
+        public static final int border=0x7f020000;
+        public static final int ic_launcher=0x7f020001;
+        public static final int ic_title_pic=0x7f020002;
     }
     public static final class id {
-        public static final int action_settings=0x7f090017;
+        public static final int action_settings=0x7f090027;
         public static final int advanceButon=0x7f09000d;
         public static final int amount=0x7f090003;
+        public static final int amountBuySell=0x7f090022;
+        public static final int amountBuySellTextField=0x7f090023;
+        public static final int amountText=0x7f09001d;
+        public static final int amountTextField=0x7f090004;
         public static final int back=0x7f090005;
+        public static final int backBuySell=0x7f090026;
         public static final int bal=0x7f090002;
         public static final int balance=0x7f090001;
         public static final int bank=0x7f090000;
         public static final int bankButton=0x7f09000b;
         public static final int bankTextView=0x7f09000a;
+        public static final int bankView=0x7f090019;
+        public static final int buyButton=0x7f090024;
+        public static final int cashBuySellView=0x7f090021;
         public static final int cashTextView=0x7f090009;
+        public static final int cashView=0x7f09001a;
+        public static final int chafeBankIntroText=0x7f090017;
+        public static final int chafeBankTitleText=0x7f090018;
         public static final int dayTextView=0x7f090008;
         public static final int debtTextView=0x7f090010;
+        public static final int debtView=0x7f09001b;
         public static final int deposit=0x7f090006;
-        public static final int editText1=0x7f090004;
         public static final int gameDayHelpButton=0x7f09000f;
         public static final int help=0x7f090013;
         public static final int helpButton=0x7f090014;
         public static final int helptitle=0x7f090011;
         public static final int newGameButton=0x7f090015;
         public static final int ok=0x7f090012;
+        public static final int paydebt=0x7f09001c;
         public static final int resumeGameButton=0x7f090016;
+        public static final int sellButton=0x7f090025;
+        public static final int sharesOwnedBuySellView=0x7f090020;
+        public static final int stockNameBuySellView=0x7f09001e;
+        public static final int stockPriceBuySellView=0x7f09001f;
         public static final int stocksListView=0x7f09000e;
         public static final int tradingBoostsButton=0x7f09000c;
         public static final int withdraw=0x7f090007;
@@ -60,6 +77,8 @@ public final class R {
         public static final int activity_main_menu=0x7f030003;
         public static final int activity_main_menu_help=0x7f030004;
         public static final int activity_result=0x7f030005;
+        public static final int bankactivitypopup=0x7f030006;
+        public static final int buysellpopup=0x7f030007;
     }
     public static final class menu {
         public static final int game_day=0x7f080000;
@@ -74,8 +93,11 @@ public final class R {
         public static final int back=0x7f06000d;
         public static final int balance=0x7f060011;
         public static final int bank=0x7f060006;
+        public static final int buy=0x7f060024;
         public static final int cancel=0x7f060016;
         public static final int cash=0x7f060005;
+        public static final int chafe_bank=0x7f06001f;
+        public static final int chafe_bank_intro=0x7f060020;
         public static final int choose_game_length=0x7f060017;
         public static final int day=0x7f060007;
         public static final int debt=0x7f06001d;
@@ -88,9 +110,14 @@ public final class R {
         public static final int main_menu_help_title=0x7f06001a;
         public static final int new_game=0x7f060012;
         public static final int ok=0x7f06000b;
+        public static final int pay_debt=0x7f06001e;
         public static final int question_mark=0x7f06000a;
         public static final int results=0x7f06001b;
         public static final int resume_game=0x7f060013;
+        public static final int sell=0x7f060025;
+        public static final int shares_owned=0x7f060023;
+        public static final int stock_name=0x7f060021;
+        public static final int stock_price=0x7f060022;
         public static final int stock_wars=0x7f060015;
         public static final int title_activity_game_day=0x7f060003;
         public static final int title_activity_game_day_help=0x7f06001c;

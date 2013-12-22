@@ -52,7 +52,7 @@
     android:textSize="25sp" />
 
 <EditText
-    android:id="@+id/editText1"
+    android:id="@+id/amountTextField"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_alignBaseline="@+id/amount"

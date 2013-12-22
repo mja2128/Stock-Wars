@@ -5,10 +5,17 @@ import com.meto.stockwars.Player.Field;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class GameDayActivity extends Activity {
 	public static Player player;
@@ -76,8 +83,9 @@ public class GameDayActivity extends Activity {
 	
 	public void onBankButton(View view)
 	{
-		Intent bankIntent = new Intent(this, BankActivity.class);
-		startActivity(bankIntent);
+		//Intent bankIntent = new Intent(this, BankActivity.class);
+		//startActivity(bankIntent);
+		bank();
 	}
 	
 	public void onGameDayHelpButton(View view)
@@ -107,5 +115,119 @@ public class GameDayActivity extends Activity {
 		stocks[14] = new Stock("Kr Corp.", 1350.0f);
 		currentDay = 1;
 	}
+	
+	private void bank()
+	{
+		LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+		final View popupView = layoutInflater.inflate(R.layout.bankactivitypopup, null);  
+	    final PopupWindow popupWindow = new PopupWindow(popupView, LayoutParams.MATCH_PARENT,  LayoutParams.WRAP_CONTENT);
+	    popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
+	    String cash = "Cash: $" + Float.toString(player.getField(Field.CASH));
+	    String bank = "Bank: $" + Float.toString(player.getField(Field.BANKBALANCE));
+	    String debt = "Debt: $" + Float.toString(player.getField(Field.DEBT));
+	    TextView cashText = (TextView) popupView.findViewById(R.id.cashView);
+	    cashText.setText(cash);
+	    TextView bankText = (TextView) popupView.findViewById(R.id.bankView);
+	    bankText.setText(bank);
+	    TextView debtText = (TextView) popupView.findViewById(R.id.debtView);
+	    debtText.setText(debt);
+	    final EditText  amount = (EditText)popupView.findViewById(R.id.amountTextField);
+	    Button btnDismiss = (Button)popupView.findViewById(R.id.back);
+	    btnDismiss.setOnClickListener(new Button.OnClickListener(){
 
+	        @Override
+	        public void onClick(View v) {
+	        // TODO Auto-generated method stub
+	        popupWindow.dismiss();
+	}});
+	        
+	        
+	        Button withdraw = (Button)popupView.findViewById(R.id.withdraw);
+	        withdraw.setOnClickListener(new Button.OnClickListener(){
+	        @Override
+	public void onClick(View v) {
+	// TODO Auto-generated method stub
+	        if(amount.getText() == null || amount.getText().toString().equalsIgnoreCase(""))
+	        {
+	        Toast toast = Toast.makeText(getApplicationContext(), "Enter Amount", Toast.LENGTH_SHORT);
+	        toast.show();
+	        }
+	        else if(Float.parseFloat(amount.getText().toString()) > player.getField(Field.BANKBALANCE))
+	        {
+	        Toast toast = Toast.makeText(getApplicationContext(), "Inadequate Money in Bank", Toast.LENGTH_SHORT);
+	        toast.show();
+	        }
+	        else if(Float.parseFloat(amount.getText().toString()) <= 0)
+	        {
+	        	Toast toast = Toast.makeText(getApplicationContext(), "Invalid Amount", Toast.LENGTH_SHORT);
+	        	toast.show();
+	        }
+	        else{
+	        player.addToField( Field.CASH, Float.parseFloat(amount.getText().toString()));
+	        player.subtractFromField(Field.BANKBALANCE, Float.parseFloat(amount.getText().toString()));
+	        }
+	}});
+
+	        
+	        Button deposit = (Button)popupView.findViewById(R.id.deposit);
+	        deposit.setOnClickListener(new Button.OnClickListener(){
+	        @Override
+	public void onClick(View v) {
+	// TODO Auto-generated method stub
+	        if(amount.getText() == null || amount.getText().toString().equalsIgnoreCase(""))
+	        {
+	        Toast toast = Toast.makeText(getApplicationContext(), "Enter Amount", Toast.LENGTH_SHORT);
+	        toast.show();
+	        }
+	        else if(Float.parseFloat(amount.getText().toString()) > player.getField(Field.CASH))
+	        {
+	        Toast toast = Toast.makeText(getApplicationContext(), "Inadequate Cash", Toast.LENGTH_SHORT);
+	        toast.show();
+	        }
+	        else if(Float.parseFloat(amount.getText().toString()) <= 0)
+	        {
+	        	Toast toast = Toast.makeText(getApplicationContext(), "Invalid Amount", Toast.LENGTH_SHORT);
+	        	toast.show();
+	        }
+	        else{
+	        player.addToField( Field.BANKBALANCE, Float.parseFloat(amount.getText().toString()));
+	        player.subtractFromField(Field.CASH, Float.parseFloat(amount.getText().toString()));
+	        }
+	}});
+	        
+
+	        Button paydebt = (Button)popupView.findViewById(R.id.paydebt);
+	        paydebt.setOnClickListener(new Button.OnClickListener(){
+	        @Override
+	public void onClick(View v) {
+	// TODO Auto-generated method stub
+	        if(amount.getText() == null || amount.getText().toString().equalsIgnoreCase(""))
+	        {
+	        Toast toast = Toast.makeText(getApplicationContext(), "Enter Amount", Toast.LENGTH_SHORT);
+	        toast.show();
+	        }
+	        else if(Float.parseFloat(amount.getText().toString()) > player.getField(Field.CASH))
+	        {
+	        Toast toast = Toast.makeText(getApplicationContext(), "Inadequate Cash", Toast.LENGTH_SHORT);
+	        toast.show();
+	        }
+	        else if(Float.parseFloat(amount.getText().toString()) > player.getField(Field.DEBT))
+	        {
+	        Toast toast = Toast.makeText(getApplicationContext(), "Debt less than amount", Toast.LENGTH_SHORT);
+	        toast.show();
+	        }
+	        else if(Float.parseFloat(amount.getText().toString()) <= 0)
+	        {
+	        	Toast toast = Toast.makeText(getApplicationContext(), "Invalid Amount", Toast.LENGTH_SHORT);
+	        	toast.show();
+	        }
+	        else{
+	        player.subtractFromField( Field.CASH, Integer.parseInt(amount.getText().toString()));
+	        player.subtractFromField(Field.DEBT, Integer.parseInt(amount.getText().toString()));
+	        }
+	}});
+	        
+	        
+	        
+	}
 }

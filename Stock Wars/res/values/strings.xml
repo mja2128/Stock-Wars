@@ -31,5 +31,13 @@
     <string name="results">Results</string>
     <string name="title_activity_game_day_help">Stock Wars Help</string>
     <string name="debt">Debt</string>
+    <string name="pay_debt">Pay Debt</string>
+    <string name="chafe_bank">Chafe Bank</string>
+    <string name="chafe_bank_intro">Welcome to Chafe bank, From here you can make deposits, withdrawals and pay off your debt!</string>
+    <string name="stock_name">Stock Name</string>
+    <string name="stock_price">Stock Price</string>
+    <string name="shares_owned">Shares Owned</string>
+    <string name="buy">Buy</string>
+    <string name="sell">Sell</string>
 
 </resources>
