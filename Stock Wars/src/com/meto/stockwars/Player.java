@@ -17,9 +17,8 @@ public class Player
 	private float bankBalance;
 	private float debt;
 	//private int[] sharesOwned;
-	private HashMap<String, Integer> sharesOwned; 
-	private int stocksBought;
-	private int stocksSold;
+	private HashMap<String, Integer> sharesOwned;
+	private HashMap<String, Integer> sharesPurchased;
 	private boolean insiderInfo;
 	private boolean stockBroker;
 	
@@ -31,15 +30,14 @@ public class Player
 		debt = 5000.00f;
 		//sharesOwned = new int[15];
 		sharesOwned = new HashMap<String, Integer>(15);
-		stocksBought = 0;
-		stocksSold = 0;
+		sharesPurchased = new HashMap<String, Integer>(15);
 		insiderInfo = false;
 		stockBroker = false;
 	}
 	
 	public static enum Field
 	{
-		CASH, BANKBALANCE, DEBT, STOCKSBOUGHT, STOCKSSOLD
+		CASH, BANKBALANCE, DEBT
 	}
 	
 	/*public enum Stock
@@ -62,14 +60,16 @@ public class Player
 			case DEBT:
 				value = round(this.debt, 2, BigDecimal.ROUND_HALF_UP);
 				break;
-			case STOCKSBOUGHT:
-				value = this.stocksBought;
-				break;
-			case STOCKSSOLD:
-				value = this.stocksSold;
-				break;
 		}
 		return value;
+	}
+	
+	public int getSharesPurchased(String stockName)
+	{
+		if(sharesPurchased.containsKey(stockName))
+			return sharesPurchased.get(stockName);
+		else
+			return 0;
 	}
 	
 	public int getSharesOwned(String stockName)
@@ -151,14 +151,6 @@ public class Player
 				this.debt = round(value, 2, BigDecimal.ROUND_HALF_UP);
 				result = true;
 				break;
-			case STOCKSBOUGHT:
-				this.stocksBought = (int) value;
-				result = true;
-				break;
-			case STOCKSSOLD:
-				this.stocksSold = (int) value;
-				result = true;
-				break;
 		}
 		return result;
 	}
@@ -178,14 +170,6 @@ public class Player
 				break;
 			case BANKBALANCE:
 				this.bankBalance += round(addAmount, 2, BigDecimal.ROUND_HALF_UP);
-				result = true;
-				break;
-			case STOCKSBOUGHT:
-				this.stocksBought += round(addAmount, 2, BigDecimal.ROUND_HALF_UP);
-				result = true;
-				break;
-			case STOCKSSOLD:
-				this.stocksSold += round(addAmount, 2, BigDecimal.ROUND_HALF_UP);
 				result = true;
 				break;
 		}
@@ -209,14 +193,6 @@ public class Player
 				this.bankBalance -= round(subAmount, 2, BigDecimal.ROUND_HALF_UP);
 				result = true;
 				break;
-			case STOCKSBOUGHT:
-				this.stocksBought -= round(subAmount, 2, BigDecimal.ROUND_HALF_UP);
-				result = true;
-				break;
-			case STOCKSSOLD:
-				this.stocksSold -= round(subAmount, 2, BigDecimal.ROUND_HALF_UP);
-				result = true;
-				break;
 		}
 		return result;
 	}
@@ -224,6 +200,12 @@ public class Player
 	public void setSharesOwned(String stockName, int amount)
 	{
 		sharesOwned.put(stockName, amount);	
+	}
+	
+	public void addToSharesPurchased(String stockName, int amount)
+	{
+		int current = getSharesPurchased(stockName);
+		sharesOwned.put(stockName, current+amount);
 	}
 	
 	/*public boolean setSharesOwned(Stock stock, int amount)

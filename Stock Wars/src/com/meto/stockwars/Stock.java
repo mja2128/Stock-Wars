@@ -38,6 +38,11 @@ public class Stock
 		priceHistory[day] = round(price, 2, BigDecimal.ROUND_HALF_UP);
 	}
 	
+	public float[] getPriceHistory()
+	{
+		return priceHistory;
+	}
+	
 	public float getPrice()
 	{
 		return round(price, 2, BigDecimal.ROUND_HALF_UP);

@@ -1,9 +1,12 @@
 package com.meto.stockwars;
 
+import java.util.Random;
+
 import com.meto.stockwars.Player.Field;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -22,6 +25,7 @@ public class GameDayActivity extends Activity {
 	public static Stock[] stocks;
 	public static int currentDay;
 	public static int game_length;
+	public static RandomEvent[] randomEvents;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,26 +62,95 @@ public class GameDayActivity extends Activity {
 	
 	public void onAdvanceButton(View view)
 	{
-		if(currentDay < game_length)
+		if(currentDay <= game_length)
 		{
-			// check for random event
 			// apply trading boosts price effects
 			// if insider info, check to see if they got caught
+			boolean randomEvent = false;
+			Random rand = new Random();
+			// 1/6 chance of a random event
+			if(rand.nextInt(6)+1 == 4)
+				randomEvent = true;
+			
+			int stockIndex = 0;
+			if(randomEvent)
+			{
+				int eventIndex = rand.nextInt(randomEvents.length);
+				stockIndex = rand.nextInt(stocks.length);
+				randomEvents[eventIndex].setStockName(stocks[stockIndex].getName());
+				float currentPrice = stocks[stockIndex].getPrice();
+				stocks[stockIndex].setPrice(currentPrice*randomEvents[eventIndex].getPriceChange() + currentPrice);
+				stocks[stockIndex].addToPriceHistory(currentDay);
+				LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				final View popupView = layoutInflater.inflate(R.layout.randomeventpopup, null);  
+			    final PopupWindow popupWindow = new PopupWindow(popupView, LayoutParams.MATCH_PARENT,  LayoutParams.WRAP_CONTENT);
+			    popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
+			    String randomEventTitle = randomEvents[eventIndex].getTitle();
+			    TextView randomEventTitleText = (TextView) popupView.findViewById(R.id.randomEventTitle);
+			    randomEventTitleText.setText(randomEventTitle);
+			    String randomEventCompany = randomEvents[eventIndex].getStockName();
+			    TextView randomEventCompanyText = (TextView) popupView.findViewById(R.id.randomEventCompany);
+			    randomEventCompanyText.setText("Company: " + randomEventCompany);
+			    String randomEventDesc = randomEvents[eventIndex].getDescription();
+			    TextView randomEventDescText = (TextView) popupView.findViewById(R.id.randomEventDescText);
+			    randomEventDescText.setText(randomEventDesc);
+			    Button btnDismiss = (Button)popupView.findViewById(R.id.backRandomEvent);
+			    btnDismiss.setOnClickListener(new Button.OnClickListener(){
+
+			        @Override
+			        public void onClick(View v) {
+			        // TODO Auto-generated method stub
+			        popupWindow.dismiss();
+			}});
+			}
 			for(int i = 0; i < stocks.length; i++)
 			{
+				if(randomEvent)
+				{
+					if(i == stockIndex)
+						continue;
+				}
 				stocks[i].addToPriceHistory(currentDay);
 				stocks[i].randomPriceChange();
 			}
 			currentDay++;
-			float bankInterest = player.getField(Field.BANKBALANCE) * 0.03f;
+			float bankInterest = player.getField(Field.BANKBALANCE) * 0.01f;
 			player.addToField(Field.BANKBALANCE, bankInterest);
-			float debtInterest = player.getField(Field.DEBT) * 0.05f;
+			float debtInterest = player.getField(Field.DEBT) * 0.03f;
 			player.addToField(Field.DEBT, debtInterest);
 			updateDisplay();
 		}
 		else
 		{
 			// game is over, set up results and show that
+			// finish this activity
+			String cash = "Cash: $" + Float.toString(player.getField(Field.CASH));
+		    String bank = "Bank: $" + Float.toString(player.getField(Field.BANKBALANCE));
+		    String debt = "Debt: $" + Float.toString(player.getField(Field.DEBT));
+		    float endValue = player.getField(Field.CASH) + player.getField(Field.BANKBALANCE) - player.getField(Field.DEBT);
+		    // start value is initial cash - initial debt, or 2000 - 5000 = -3000
+		    float startValue = -3000.0f;
+		    float netValue = endValue - startValue;
+		    String net = "Net: $" + Float.toString(netValue);
+		    String maxStock = "";
+	    	int currentMaxAmount = 0;
+		    for(int i = 0; i < stocks.length; i++)
+		    {
+		    	if(player.getSharesPurchased(stocks[i].getName()) > currentMaxAmount)
+		    	{
+		    		maxStock = stocks[i].getName();
+		    		currentMaxAmount = player.getSharesPurchased(stocks[i].getName());
+		    	}
+		    }
+		    String mostPurchased = "Most Purchased Stock: " + maxStock;
+			Intent intent = new Intent(this, ResultsActivity.class);
+			intent.putExtra("com.meto.stockwars.CASH", cash);
+			intent.putExtra("com.meto.stockwars.BANK", bank);
+			intent.putExtra("com.meto.stockwars.DEBT", debt);
+			intent.putExtra("com.meto.stockwars.NET", net);
+			intent.putExtra("com.meto.stockwars.MOST_PURCHASED", mostPurchased);
+			startActivity(intent);
+			finish();
 		}
 	}
 	
@@ -114,6 +187,19 @@ public class GameDayActivity extends Activity {
 		stocks[13] = new Stock("Daxam LLC", 1650.0f);
 		stocks[14] = new Stock("Kr Corp.", 1350.0f);
 		currentDay = 1;
+		randomEvents = new RandomEvent[6];
+		randomEvents[0] = new RandomEvent(getString(R.string.successful_launch), getString(R.string.successful_launch_desc));
+		randomEvents[0].setPriceChange(0.8f);
+		randomEvents[1] = new RandomEvent(getString(R.string.ceo_fired), getString(R.string.ceo_fired_desc));
+		randomEvents[1].setPriceChange(-0.8f);
+		randomEvents[2] = new RandomEvent(getString(R.string.ad_campaign), getString(R.string.ad_campaign_desc));
+		randomEvents[2].setPriceChange(0.75f);
+		randomEvents[3] = new RandomEvent(getString(R.string.product_recall), getString(R.string.product_recall_desc));
+		randomEvents[3].setPriceChange(-0.75f);
+		randomEvents[4] = new RandomEvent(getString(R.string.new_location), getString(R.string.new_location_desc));
+		randomEvents[4].setPriceChange(0.5f);
+		randomEvents[5] = new RandomEvent(getString(R.string.lost_lawsuit), getString(R.string.lost_lawsuit_desc));
+		randomEvents[5].setPriceChange(-0.5f);
 	}
 	
 	private void bank()

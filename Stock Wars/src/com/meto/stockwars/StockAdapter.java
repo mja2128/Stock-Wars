@@ -4,6 +4,10 @@
  */
 package com.meto.stockwars;
 
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.GraphView.GraphViewData;
+import com.jjoe64.graphview.GraphViewSeries;
+import com.jjoe64.graphview.LineGraphView;
 import com.meto.stockwars.Player.Field;
 
 import android.content.Context;
@@ -15,6 +19,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -64,9 +69,50 @@ public class StockAdapter extends BaseAdapter {
 		stockNameTextView.setClickable(true);
 		stockNameTextView.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // show the stock dialog popup when that is done
-            	// if the user has stock broker enabled, show the price history chart
-            	// if not, inform the user of the stock broker option
+            	LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				final View popupView = layoutInflater.inflate(R.layout.stockpopup, null);  
+			    final PopupWindow popupWindow = new PopupWindow(popupView, LayoutParams.MATCH_PARENT,  LayoutParams.WRAP_CONTENT);
+			    popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
+			    String stockNameHistory = stocks[pos].getName() + " History";
+			    TextView stockNameText = (TextView) popupView.findViewById(R.id.stockNameHistoryTitle);
+			    stockNameText.setText(stockNameHistory);
+			    TextView noBrokerText = (TextView) popupView.findViewById(R.id.noBrokerTextView);
+			    if(!GameDayActivity.player.isStockBrokerEnabled())
+			    {
+			    	String noBrokerMsg = context.getString(R.string.no_broker_message);
+				    noBrokerText.setText(noBrokerMsg);
+				    noBrokerText.setVisibility(View.VISIBLE);
+				    LinearLayout graphLayout = (LinearLayout) popupView.findViewById(R.id.priceHistoryGraph);
+				    graphLayout.setVisibility(View.INVISIBLE);
+			    }
+			    else
+			    {
+			    	// add the current day's price to history so there isn't a 0 for the last element
+			    	stocks[pos].addToPriceHistory(GameDayActivity.currentDay);
+			    	GraphViewData[] graphData = new GraphViewData[GameDayActivity.currentDay];
+			    	for(int i = 0; i < GameDayActivity.currentDay; i++)
+			    	{
+			    		graphData[i] = new GraphViewData(i+1, stocks[pos].getPriceHistory()[i+1]);
+			    	}
+			    	GraphViewSeries graphSeries = new GraphViewSeries(graphData);
+			    	GraphView graphView = new LineGraphView(context, "Stock Price History");
+			    	graphView.addSeries(graphSeries);
+			    	graphView.setViewPort(1, 10);
+			    	graphView.setScrollable(true);
+			    	graphView.setScalable(false);
+			    	LinearLayout graphLayout = (LinearLayout) popupView.findViewById(R.id.priceHistoryGraph);
+			    	graphLayout.addView(graphView);
+			    	graphLayout.setVisibility(View.VISIBLE);
+			    	noBrokerText.setVisibility(View.INVISIBLE);
+			    }
+			    Button btnDismiss = (Button)popupView.findViewById(R.id.backStock);
+			    btnDismiss.setOnClickListener(new Button.OnClickListener(){
+
+			        @Override
+			        public void onClick(View v) {
+			        // TODO Auto-generated method stub
+			        popupWindow.dismiss();
+			}});
             }
         });
 		row.addView(stockNameTextView);

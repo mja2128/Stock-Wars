@@ -28,9 +28,6 @@ public class MainMenuActivity extends Activity {
 	{
 		NewGameDialogFragment newGameFragment = new NewGameDialogFragment();
 		newGameFragment.show(getFragmentManager(), "newgame");
-		// set up Intent
-		// create new GameDayActivity and start it
-		// be sure to pass it the game_length via the Intent
 	}
 	
 	public void onHelp(View view)

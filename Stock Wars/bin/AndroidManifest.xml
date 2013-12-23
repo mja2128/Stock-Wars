@@ -50,6 +50,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.meto.stockwars.GameDayActivity" />
         </activity>
+        <activity
+            android:name="com.meto.stockwars.ResultsActivity"
+            android:label="@string/title_activity_results" >
+        </activity>
     </application>
 
 </manifest>

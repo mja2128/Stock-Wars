@@ -39,5 +39,27 @@
     <string name="shares_owned">Shares Owned</string>
     <string name="buy">Buy</string>
     <string name="sell">Sell</string>
+    <string name="title_activity_results">Game Results</string>
+    <string name="congrats_results">Congratulations! You have completed Stock Wars. Let\'s see how you did...</string>
+    <string name="net">Net</string>
+    <string name="most_purchased">Most Purchased</string>
+    <string name="main_menu_button">Main Menu</string>
+    <string name="stock_name_history_title">Stock Name History</string>
+    <string name="no_broker_message">In order to view this stock\'s price history, you must purchase the Stock Broker trading boost from the Trading Boosts section.</string>
+    <string name="successful_launch">Successful Product Launch!</string>
+    <string name="ceo_fired">CEO Fired!</string>
+    <string name="ad_campaign">Huge Ad Campaign!</string>
+    <string name="product_recall">Major Product Recalled!</string>
+    <string name="lost_lawsuit">Major Lawsuit Lost!</string>
+    <string name="new_location">New Office Opened!</string>
+    <string name="successful_launch_desc">The company has just released a major product and people absolutely love it! Their stock price just took a huge jump!</string>
+    <string name="ceo_fired_desc">The board of directors of this company has decided it is time for a change. The CEO has just been terminated! This sudden change in corporate governance has shaken investors\' confidence in the company. Stock prices fall greatly!</string>
+    <string name="ad_campaign_desc">The company has just started a major ad campaign across the country, bringing in a multitude of new customers. Stock price quickly climbs!</string>
+    <string name="product_recall_desc">The company has just recalled their biggest product! One million units are faulty and have made the lives of many people very difficult... Stock price plummets!</string>
+    <string name="new_location_desc">The company has just opened up another corporate office in a new city! This expansion is surely a good sign and has investors very optimistic about their future. Stock price rises fast!</string>
+    <string name="lost_lawsuit_desc">The company has just been defeated in a very big legal battle. Losses due to this lawsuit are staggering. The company\'s stock takes a huge dive!</string>
+    <string name="random_event_title">Random Event Title</string>
+    <string name="random_event_description">Random Event Description</string>
+    <string name="random_event_company">Random Event Company</string>
 
 </resources>

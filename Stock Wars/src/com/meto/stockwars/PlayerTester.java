@@ -29,10 +29,6 @@ public class PlayerTester
 			pass = false;
 		if(player.getField(Player.Field.BANKBALANCE) != 0)
 			pass = false;
-		if(player.getField(Player.Field.STOCKSBOUGHT) != 0)
-			pass = false;
-		if(player.getField(Player.Field.STOCKSSOLD) != 0)
-			pass = false;
 		if(pass)
 			System.out.println("getFieldTest: Pass");
 		else
@@ -54,14 +50,6 @@ public class PlayerTester
 		if(!player.setValue(Player.Field.BANKBALANCE, 2380.80f))
 			pass = false;
 		if(player.getField(Player.Field.BANKBALANCE) != 2380.80)
-			pass = false;
-		if(!player.setValue(Player.Field.STOCKSBOUGHT, 76))
-			pass = false;
-		if(player.getField(Player.Field.STOCKSBOUGHT) != 76)
-			pass = false;
-		if(!player.setValue(Player.Field.STOCKSSOLD, 37))
-			pass = false;
-		if(player.getField(Player.Field.STOCKSSOLD) != 37)
 			pass = false;
 		if(pass)
 			System.out.println("setValueTest: Pass");
