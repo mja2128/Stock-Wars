@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/border"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin" >
+
+    <TextView
+        android:id="@+id/tradingBoostsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="@string/trading_boosts"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/tradingBoostsDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tradingBoostsTitle"
+        android:layout_centerHorizontal="true"
+        android:text="@string/trading_boosts_desc" />
+
+    <Button
+        android:id="@+id/stockBrokerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tradingBoostsDesc"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:text="@string/stock_broker" />
+
+    <Button
+        android:id="@+id/backTradingBoosts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/insiderInfoButton"
+        android:layout_centerHorizontal="true"
+        android:text="@string/back" />
+
+    <Button
+        android:id="@+id/insiderInfoButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/stockBrokerButton"
+        android:layout_centerHorizontal="true"
+        android:text="@string/insider_info" />
+
+</RelativeLayout>

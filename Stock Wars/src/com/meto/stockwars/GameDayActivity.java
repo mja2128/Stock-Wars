@@ -5,6 +5,7 @@ import java.util.Random;
 import com.meto.stockwars.Player.Field;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -38,10 +39,10 @@ public class GameDayActivity extends Activity {
 		updateDisplay();
 	}
 	
-	private void updateDisplay()
+	public void updateDisplay()
 	{
 		ListView stocksListView = (ListView) findViewById(R.id.stocksListView);
-		StockAdapter stockAdapter = new StockAdapter(stocks, stocksListView.getContext());
+		StockAdapter stockAdapter = new StockAdapter(stocks, this);
 		stocksListView.setAdapter(stockAdapter);
 		TextView cashTextView = (TextView) findViewById(R.id.cashTextView);
 		cashTextView.setText("Cash: $" + String.valueOf(player.getField(Field.CASH)));
@@ -64,8 +65,7 @@ public class GameDayActivity extends Activity {
 	{
 		if(currentDay <= game_length)
 		{
-			// apply trading boosts price effects
-			// if insider info, check to see if they got caught
+			possiblyCaught();
 			boolean randomEvent = false;
 			Random rand = new Random();
 			// 1/6 chance of a random event
@@ -118,6 +118,18 @@ public class GameDayActivity extends Activity {
 			player.addToField(Field.BANKBALANCE, bankInterest);
 			float debtInterest = player.getField(Field.DEBT) * 0.03f;
 			player.addToField(Field.DEBT, debtInterest);
+			if(player.isStockBrokerEnabled())
+				player.subtractFromField(Field.CASH, 50.0f);
+			if(player.insiderInfoDay() > 0)
+			{
+				player.subtractFromField(Field.CASH, 100.0f);
+				player.setInsiderInfoDay(player.insiderInfoDay()-1);
+				for(int i = 0; i < stocks.length; i++)
+				{
+					if(player.getSharesOwned(stocks[i].getName()) > 0)
+						stocks[i].setPrice(stocks[i].getPrice()*0.8f + stocks[i].getPrice());
+				}
+			}
 			updateDisplay();
 		}
 		else
@@ -156,9 +168,12 @@ public class GameDayActivity extends Activity {
 	
 	public void onBankButton(View view)
 	{
-		//Intent bankIntent = new Intent(this, BankActivity.class);
-		//startActivity(bankIntent);
 		bank();
+	}
+	
+	public void onTradingBoosts(View v)
+	{
+		tradingBoost();
 	}
 	
 	public void onGameDayHelpButton(View view)
@@ -204,18 +219,19 @@ public class GameDayActivity extends Activity {
 	
 	private void bank()
 	{
-		LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+		LayoutInflater layoutInflater = (LayoutInflater)this.getSystemService(LAYOUT_INFLATER_SERVICE);
 		final View popupView = layoutInflater.inflate(R.layout.bankactivitypopup, null);  
 	    final PopupWindow popupWindow = new PopupWindow(popupView, LayoutParams.MATCH_PARENT,  LayoutParams.WRAP_CONTENT);
+	    popupWindow.setFocusable(true);
 	    popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
 	    String cash = "Cash: $" + Float.toString(player.getField(Field.CASH));
 	    String bank = "Bank: $" + Float.toString(player.getField(Field.BANKBALANCE));
 	    String debt = "Debt: $" + Float.toString(player.getField(Field.DEBT));
-	    TextView cashText = (TextView) popupView.findViewById(R.id.cashView);
+	    final TextView cashText = (TextView) popupView.findViewById(R.id.cashView);
 	    cashText.setText(cash);
-	    TextView bankText = (TextView) popupView.findViewById(R.id.bankView);
+	    final TextView bankText = (TextView) popupView.findViewById(R.id.bankView);
 	    bankText.setText(bank);
-	    TextView debtText = (TextView) popupView.findViewById(R.id.debtView);
+	    final TextView debtText = (TextView) popupView.findViewById(R.id.debtView);
 	    debtText.setText(debt);
 	    final EditText  amount = (EditText)popupView.findViewById(R.id.amountTextField);
 	    Button btnDismiss = (Button)popupView.findViewById(R.id.back);
@@ -251,6 +267,10 @@ public class GameDayActivity extends Activity {
 	        else{
 	        player.addToField( Field.CASH, Float.parseFloat(amount.getText().toString()));
 	        player.subtractFromField(Field.BANKBALANCE, Float.parseFloat(amount.getText().toString()));
+	        cashText.setText("Cash: $" + Float.toString(player.getField(Field.CASH)));
+	        bankText.setText("Bank: $" + Float.toString(player.getField(Field.BANKBALANCE)));
+	        debtText.setText("Debt: $" + Float.toString(player.getField(Field.DEBT)));
+	        updateDisplay();
 	        }
 	}});
 
@@ -278,6 +298,10 @@ public class GameDayActivity extends Activity {
 	        else{
 	        player.addToField( Field.BANKBALANCE, Float.parseFloat(amount.getText().toString()));
 	        player.subtractFromField(Field.CASH, Float.parseFloat(amount.getText().toString()));
+	        cashText.setText("Cash: $" + Float.toString(player.getField(Field.CASH)));
+	        bankText.setText("Bank: $" + Float.toString(player.getField(Field.BANKBALANCE)));
+	        debtText.setText("Debt: $" + Float.toString(player.getField(Field.DEBT)));
+	        updateDisplay();
 	        }
 	}});
 	        
@@ -308,12 +332,219 @@ public class GameDayActivity extends Activity {
 	        	toast.show();
 	        }
 	        else{
-	        player.subtractFromField( Field.CASH, Integer.parseInt(amount.getText().toString()));
-	        player.subtractFromField(Field.DEBT, Integer.parseInt(amount.getText().toString()));
+	        player.subtractFromField( Field.CASH, Float.parseFloat(amount.getText().toString()));
+	        player.subtractFromField(Field.DEBT, Float.parseFloat(amount.getText().toString()));
+	        cashText.setText("Cash: $" + Float.toString(player.getField(Field.CASH)));
+	        bankText.setText("Bank: $" + Float.toString(player.getField(Field.BANKBALANCE)));
+	        debtText.setText("Debt: $" + Float.toString(player.getField(Field.DEBT)));
+	        updateDisplay();
 	        }
 	}});
+	}
+	
+	private void tradingBoost()
+	{
+	    LayoutInflater layoutInflater = (LayoutInflater)this.getSystemService(LAYOUT_INFLATER_SERVICE);
+	    final View popupView1 = layoutInflater.inflate(R.layout.tradingboostpopup, null);  
+	    final PopupWindow popupWindow = new PopupWindow(popupView1, LayoutParams.MATCH_PARENT,  LayoutParams.WRAP_CONTENT);
+	    popupWindow.showAtLocation(popupView1, Gravity.CENTER, 0, 0);
+	        
+	    Button btnDismiss = (Button)popupView1.findViewById(R.id.backTradingBoosts);
+	    Button stockBroker = (Button)popupView1.findViewById(R.id.stockBrokerButton);
+	    Button insiderInfo = (Button)popupView1.findViewById(R.id.insiderInfoButton);
+	    if(player.isStockBrokerEnabled())
+	    {
+	        stockBroker.setText("Fire Stock Broker");
+	    }
+	    else
+	    {
+	        stockBroker.setText("Hire Stock Broker");
+	    }
+	        
+	    if(player.insiderInfoDay() > 0)
+	    {
+	        insiderInfo.setText("Insider Info Enabled");
+	    }
+	    else
+	    {
+	        insiderInfo.setText("Insider Info");
+	    }
+	        
+	       
+	    
+	        
+	    btnDismiss.setOnClickListener(new Button.OnClickListener(){
+	        @Override
+	        public void onClick(View v) {
+	        // TODO Auto-generated method stub
+	        popupWindow.dismiss();
+	    }});
 	        
 	        
 	        
+	    stockBroker.setOnClickListener(new Button.OnClickListener(){
+	        @Override
+	        public void onClick(View v) {
+	        // TODO Auto-generated method stub
+	        if(!player.isStockBrokerEnabled())
+	        {
+	            player.setStockBroker(true);
+	            player.subtractFromField(Field.CASH, 50.0f);
+	            updateDisplay();
+	            Toast toast = Toast.makeText(getApplicationContext(), "Stock Broker Hired", Toast.LENGTH_SHORT);
+	            toast.show();
+	        }
+	        else
+	        {
+	            player.setStockBroker(false);
+	            Toast toast = Toast.makeText(getApplicationContext(), "Stock Broker Fired", Toast.LENGTH_SHORT);
+	            toast.show();
+	        }
+	            
+	    }});
+	        
+	        
+	        
+	    insiderInfo.setOnClickListener(new Button.OnClickListener(){
+	        @Override
+	        public void onClick(View v) {
+	        // TODO Auto-generated method stub
+	        if(player.insiderInfoDay() > 0)
+	        {
+	            Toast toast = Toast.makeText(getApplicationContext(), "Insider Info Already Enabled", Toast.LENGTH_SHORT);
+	            toast.show();
+	        }
+	        else
+	        {
+	            player.setInsiderInfoDay(5);
+	            player.subtractFromField(Field.CASH, 100.0f);
+	            updateDisplay();
+	            Toast toast = Toast.makeText(getApplicationContext(), "Insider Info Has Been Enabled", Toast.LENGTH_SHORT);
+	            toast.show();
+	        }
+	            
+	    }});
+	}
+	
+	private void possiblyCaught()
+	{
+		if(player.insiderInfoDay() > 0)
+		{
+			Random randomGenerator = new Random();
+			int chance = randomGenerator.nextInt(3);
+			if(chance == 2)
+				initialCaughtByPolice();
+		}
+	}
+	
+	private void successEvadeCops()
+	{
+		LayoutInflater layoutInflater = (LayoutInflater)this.getSystemService(LAYOUT_INFLATER_SERVICE);
+		final View popupView4 = layoutInflater.inflate(R.layout.successevadecops, null);  
+	    final PopupWindow popupWindow = new PopupWindow(popupView4, LayoutParams.MATCH_PARENT,  LayoutParams.WRAP_CONTENT);
+	    popupWindow.setFocusable(true);
+	    popupWindow.showAtLocation(popupView4, Gravity.CENTER, 0, 0);
+	    Button btnDismiss = (Button)popupView4.findViewById(R.id.backSuccessEvade);
+	    btnDismiss.setOnClickListener(new Button.OnClickListener(){
+
+	        @Override
+	        public void onClick(View v) {
+	        // TODO Auto-generated method stub
+	        popupWindow.dismiss();
+	}});	
+	}
+	
+	private void caughtByPolice()
+	{
+		LayoutInflater layoutInflater = (LayoutInflater)this.getSystemService(LAYOUT_INFLATER_SERVICE);
+		final View popupView3 = layoutInflater.inflate(R.layout.caughtbypolicepopup, null);  
+	    final PopupWindow popupWindow = new PopupWindow(popupView3, LayoutParams.MATCH_PARENT,  LayoutParams.WRAP_CONTENT);
+	    popupWindow.setFocusable(true);
+	    popupWindow.showAtLocation(popupView3, Gravity.CENTER, 0, 0);
+	    player.subtractFromField( Field.BANKBALANCE, (player.getField(Field.BANKBALANCE)*1/3));
+	    player.subtractFromField(Field.CASH,(player.getField(Field.CASH)*1/3) );
+	    
+	    Button btnDismiss = (Button)popupView3.findViewById(R.id.backFailedEvade);
+	    btnDismiss.setOnClickListener(new Button.OnClickListener(){
+
+	        @Override
+	        public void onClick(View v) {
+	        // TODO Auto-generated method stub
+	        updateDisplay();
+	        popupWindow.dismiss();
+	}});	
+	}
+	
+	private void initialCaughtByPolice()
+	{
+		final String ransequence = "";
+		String str = "AB";
+		final String userinputsequence = "";
+		Random randomGenerator = new Random();
+		for(int i=0; i<=8; i++)
+		{
+			int randomInt = randomGenerator.nextInt(2)+1;
+			if(randomInt == 1)
+				ransequence.concat("A");
+			else if(randomInt == 2)
+				ransequence.concat("B");
+		}
+		LayoutInflater layoutInflater = (LayoutInflater)this.getSystemService(LAYOUT_INFLATER_SERVICE);
+		final View popupView2 = layoutInflater.inflate(R.layout.initiallycaughtpopup, null);  
+	    final PopupWindow popupWindow = new PopupWindow(popupView2, LayoutParams.MATCH_PARENT,  LayoutParams.WRAP_CONTENT);
+	    popupWindow.setFocusable(true);
+	    popupWindow.showAtLocation(popupView2, Gravity.CENTER, 0, 0);
+	    final TextView clocktime = (TextView) popupView2.findViewById(R.id.timerview);
+	    TextView sequence= (TextView) findViewById(R.id.initiallyCaughtSequence);
+	    final Button a = (Button)popupView2.findViewById(R.id.initiallyCaughtAButton);
+	    final Button b = (Button)popupView2.findViewById(R.id.initiallyCaughtBButton);
+	    final TextView uinput= (TextView) popupView2.findViewById(R.id.initiallyCaughtUInput);
+	    uinput.setText(userinputsequence);
+	    new CountDownTimer(5000, 1000) {
+
+	        public void onTick(long millisUntilFinished) {
+	            clocktime.setText("seconds remaining: " + millisUntilFinished / 1000);
+	        }
+
+	        public void onFinish() {
+	        a.setOnClickListener(new Button.OnClickListener(){
+	            @Override
+	            public void onClick(View v) {
+	            userinputsequence.concat("A");
+	            uinput.setText(userinputsequence);
+	    }});
+	            
+	            b.setOnClickListener(new Button.OnClickListener(){
+	            @Override
+	            public void onClick(View v) {
+	            userinputsequence.concat("B");
+	            uinput.setText(userinputsequence);
+	    }});
+	        new CountDownTimer(4000, 1000) {
+
+	            public void onTick(long millisUntilFinished) {
+	                clocktime.setText("seconds remaining: " + millisUntilFinished / 1000);
+	                
+	            }
+	            
+	            public void onFinish() {
+	                clocktime.setText("done!");
+	                a.setVisibility(View.GONE);
+	                b.setVisibility(View.GONE);
+	                if(userinputsequence.equals(ransequence))
+	                {
+	                	successEvadeCops();
+	                	popupWindow.dismiss();
+	                }
+	                else
+	                {
+	                	caughtByPolice();
+	                	popupWindow.dismiss();
+	                }
+	            }
+	        }.start();
+	        }
+	        
+	    }.start();
 	}
 }

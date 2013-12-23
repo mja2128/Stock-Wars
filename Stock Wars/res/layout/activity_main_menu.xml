@@ -32,17 +32,27 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/helpButton"
         android:layout_centerHorizontal="true"
-        android:text="@string/resume_game" />
+        android:text="@string/resume_game"
+        android:onClick="onResumeGame" />
 
     <TextView
-        android:id="@+id/cashTextView"
+        android:id="@+id/mainMenuTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="28dp"
         android:text="@string/stock_wars"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="36sp" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:contentDescription="@string/main_menu_pic_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mainMenuTitle"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/stockgraph" />
 
 </RelativeLayout>

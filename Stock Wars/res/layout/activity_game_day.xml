@@ -50,7 +50,8 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/bankButton"
         android:layout_centerHorizontal="true"
-        android:text="@string/trading_boosts" />
+        android:text="@string/trading_boosts"
+        android:onClick="onTradingBoosts" />
 
     <Button
         android:id="@+id/advanceButon"

@@ -27,9 +27,9 @@ public class NewGameDialogFragment extends DialogFragment
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        final String[] game_lengths = {"2", "30", "60", "90", "120"};
+        final String[] game_lengths = {"30", "60", "90", "120"};
         builder.setTitle(R.string.choose_game_length)
-        	   .setSingleChoiceItems(game_lengths, 0,
+        	   .setSingleChoiceItems(game_lengths, -1,
         			   new OnClickListener() {
                    @Override
                    public void onClick(DialogInterface dialog, int which) {

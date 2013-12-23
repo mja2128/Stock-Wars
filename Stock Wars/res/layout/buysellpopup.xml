@@ -62,10 +62,7 @@
         android:layout_alignTop="@+id/amountBuySell"
         android:layout_toRightOf="@+id/amountBuySell"
         android:ems="10"
-        android:inputType="numberSigned" >
-
-        <requestFocus />
-    </EditText>
+        android:inputType="numberSigned" />
 
     <Button
         android:id="@+id/buyButton"

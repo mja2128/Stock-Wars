@@ -31,12 +31,12 @@ import android.widget.Toast;
  */
 public class StockAdapter extends BaseAdapter {
 	private Stock[] stocks;
-	private Context context;
+	private GameDayActivity context;
 
 	/**
 	 * 
 	 */
-	public StockAdapter(Stock[] stocks, Context context) {
+	public StockAdapter(Stock[] stocks, GameDayActivity context) {
 		this.stocks = stocks;
 		this.context = context;
 	}
@@ -72,6 +72,7 @@ public class StockAdapter extends BaseAdapter {
             	LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				final View popupView = layoutInflater.inflate(R.layout.stockpopup, null);  
 			    final PopupWindow popupWindow = new PopupWindow(popupView, LayoutParams.MATCH_PARENT,  LayoutParams.WRAP_CONTENT);
+			    popupWindow.setFocusable(true);
 			    popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
 			    String stockNameHistory = stocks[pos].getName() + " History";
 			    TextView stockNameText = (TextView) popupView.findViewById(R.id.stockNameHistoryTitle);
@@ -138,6 +139,7 @@ public class StockAdapter extends BaseAdapter {
 				LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				final View popupView = layoutInflater.inflate(R.layout.buysellpopup, null);  
 			    final PopupWindow popupWindow = new PopupWindow(popupView, LayoutParams.MATCH_PARENT,  LayoutParams.WRAP_CONTENT);
+			    popupWindow.setFocusable(true);
 			    popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
 			    String cash = "Cash: $" + Float.toString(GameDayActivity.player.getField(Field.CASH));
 			    String sharesOwned = "Shares Owned: " + Integer.toString(GameDayActivity.player.getSharesOwned(stocks[pos].getName()));
@@ -184,6 +186,7 @@ public class StockAdapter extends BaseAdapter {
 			        }
 			        else{
 			        	int currentShares = GameDayActivity.player.getSharesOwned(stocks[pos].getName());
+			        	GameDayActivity.player.addToSharesPurchased(stocks[pos].getName(), Integer.parseInt(amount.getText().toString()));
 			        	GameDayActivity.player.setSharesOwned(stocks[pos].getName(), currentShares+Integer.parseInt(amount.getText().toString()));
 			        	GameDayActivity.player.subtractFromField(Field.CASH, Integer.parseInt(amount.getText().toString())*stocks[pos].getPrice());
 			        	String cash = "Cash: $" + Float.toString(GameDayActivity.player.getField(Field.CASH));
@@ -192,6 +195,7 @@ public class StockAdapter extends BaseAdapter {
 					    cashBuySellText.setText(cash);
 					    TextView sharesOwnedText = (TextView) popupView.findViewById(R.id.sharesOwnedBuySellView);
 					    sharesOwnedText.setText(sharesOwned);
+					    context.updateDisplay();
 			        }
 			}});
 
@@ -226,6 +230,7 @@ public class StockAdapter extends BaseAdapter {
 					    cashBuySellText.setText(cash);
 					    TextView sharesOwnedText = (TextView) popupView.findViewById(R.id.sharesOwnedBuySellView);
 					    sharesOwnedText.setText(sharesOwned);
+					    context.updateDisplay();
 			        }
 			}});
 			        

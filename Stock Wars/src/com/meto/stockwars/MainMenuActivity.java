@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Toast;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class MainMenuActivity extends Activity {
@@ -28,6 +29,12 @@ public class MainMenuActivity extends Activity {
 	{
 		NewGameDialogFragment newGameFragment = new NewGameDialogFragment();
 		newGameFragment.show(getFragmentManager(), "newgame");
+	}
+	
+	public void onResumeGame(View v)
+	{
+		Toast toast = Toast.makeText(getApplicationContext(), "Coming Soon!", Toast.LENGTH_SHORT);
+        toast.show();
 	}
 	
 	public void onHelp(View view)

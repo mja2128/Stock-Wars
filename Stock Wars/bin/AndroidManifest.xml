@@ -15,7 +15,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.meto.stockwars.MainMenuActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,12 +25,14 @@
         </activity>
         <activity
             android:name="com.meto.stockwars.GameDayActivity"
-            android:label="@string/title_activity_game_day" >
+            android:label="@string/title_activity_game_day"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.meto.stockwars.MainMenuHelpActivity"
             android:label="@string/title_activity_main_menu_help"
-            android:parentActivityName="com.meto.stockwars.MainMenuActivity" >
+            android:parentActivityName="com.meto.stockwars.MainMenuActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.meto.stockwars.MainMenuActivity" />
@@ -37,7 +40,8 @@
         <activity
             android:name="com.meto.stockwars.GameDayHelpActivity"
             android:label="@string/title_activity_game_day_help"
-            android:parentActivityName="com.meto.stockwars.GameDayActivity" >
+            android:parentActivityName="com.meto.stockwars.GameDayActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.meto.stockwars.GameDayActivity" />
@@ -45,14 +49,16 @@
         <activity
             android:name="com.meto.stockwars.BankActivity"
             android:label="@string/bank"
-            android:parentActivityName="com.meto.stockwars.GameDayActivity" >
+            android:parentActivityName="com.meto.stockwars.GameDayActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.meto.stockwars.GameDayActivity" />
         </activity>
         <activity
             android:name="com.meto.stockwars.ResultsActivity"
-            android:label="@string/title_activity_results" >
+            android:label="@string/title_activity_results"
+            android:screenOrientation="portrait" >
         </activity>
     </application>
 

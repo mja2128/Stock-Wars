@@ -61,5 +61,21 @@
     <string name="random_event_title">Random Event Title</string>
     <string name="random_event_description">Random Event Description</string>
     <string name="random_event_company">Random Event Company</string>
+    <string name="trading_boosts_desc">This is the Trading Boosts menu. From here you can hire a Stock Broker or use insider info at the risk of getting caught by the police.</string>
+    <string name="stock_broker">Stock Broker</string>
+    <string name="insider_info">Insider Info</string>
+    <string name="evaded_cops_title">Successfully Evaded Cops</string>
+    <string name="evaded_cops_desc">You have successfully evaded the cops! You are now free to move about the stock market.</string>
+    <string name="initially_caught_title">Evade Cops</string>
+    <string name="initially_caught_desc">The Police got an anonymous tip that you have been involved in insider trading. Now you must try to evade the Cops by pressing the correct sequence in the alloted time.</string>
+    <string name="sequence">Sequence</string>
+    <string name="place_holder">TextView</string>
+    <string name="a">A</string>
+    <string name="b">B</string>
+    <string name="initially_caught_pic_desc">Picture of cop chasing bad guy.</string>
+    <string name="failed_evade_title">Failed to Evade Cops</string>
+    <string name="failed_evade_desc">You have failed to evade the cops. As a result, you will lose a 1/3 of your liquid money.</string>
+    <string name="failed_evade_pic_desc">Picture of cop catching bad guy.</string>
+    <string name="main_menu_pic_desc">Picture of a stock price graph.</string>
 
 </resources>
